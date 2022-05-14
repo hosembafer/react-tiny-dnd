@@ -20,7 +20,7 @@ yarn add react-tiny-dnd
 
 ## Features
 - Vertical lists
-- Easy auto scrolling [integration](https://github.com/hosembafer/react-tiny-dnd/blob/main/demo/src/App.tsx#L91) 🔥
+- Easy auto scrolling [integration](https://github.com/hosembafer/react-tiny-dnd/blob/main/demo/src/App.tsx#L97) 🔥
 - Add and remove items with no doubts
 - Variable heights supported by design 🚀
 - Custom drag handles

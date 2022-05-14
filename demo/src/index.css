@@ -22,6 +22,7 @@ code {
 .item {
   display: flex;
   align-items: center;
+  justify-content: center;
   padding: 15px;
   border-bottom: 1px solid #eee;
 }
@@ -34,7 +35,16 @@ code {
   margin-left: 10px;
 }
 
-.dnd-icon img {
+.delete-icon {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+  user-select: none;
+  margin-left: 10px;
+}
+
+.dnd-icon img,
+.delete-icon img {
   width: inherit;
   height: inherit;
   pointer-events: none;

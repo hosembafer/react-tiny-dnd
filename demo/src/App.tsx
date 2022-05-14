@@ -1,6 +1,7 @@
 import { FC, useRef, useState } from "react";
 import { useAutoScroll } from "react-tiny-autoscroll";
 import dndIc from "./assets/icons/dnd.svg";
+import deleteIc from "./assets/icons/delete.svg";
 import { Draggable, moveItems, useDraggable, useDraggableContext } from "react-tiny-dnd";
 
 function hashCode(str: string) {
@@ -31,11 +32,12 @@ const buildItem = (n: number) => {
 
 const defaultItems = Array(100).fill(null).map((_, i) => buildItem(i));
 
-const Item: FC<{ id: string | number | undefined, color: string, listeners?: any, isDragging: boolean }> = ({
+const Item: FC<{ id: string | number | undefined, color: string, listeners?: any, isDragging: boolean, handleDelete: Function }> = ({
   id,
   color: backgroundColor,
   listeners,
   isDragging,
+  handleDelete,
 }) => {
   const index = Number(id);
   const opacity = isDragging ? 0.5 : 1;
@@ -53,6 +55,9 @@ const Item: FC<{ id: string | number | undefined, color: string, listeners?: any
         <div className="color-badge" style={{ backgroundColor }} {...listeners}></div>
         {id}
       </div>
+      <div className="delete-icon" onClick={() => handleDelete()}>
+        <img src={deleteIc} alt="delete" />
+      </div>
       <div className="dnd-icon" {...listeners}>
         <img src={dndIc} alt="dnd" />
       </div>
@@ -64,12 +69,13 @@ const DraggableItem = ({
   index,
   context,
   item,
+  handleDelete,
 }: any) => {
   const { listeners, isDragging } = useDraggable(context, index);
 
   return (
     <Draggable context={context} key={item.id} index={index}>
-      <Item id={item.id} color={item.color} listeners={listeners} isDragging={isDragging} />
+      <Item id={item.id} color={item.color} listeners={listeners} isDragging={isDragging} handleDelete={() => handleDelete(item.id)} />
     </Draggable>
   );
 };
@@ -90,12 +96,14 @@ function App() {
 
   useAutoScroll({ containerRef, skip: !context.isDragging });
 
+  const handleDelete = (id: string) => setItems(items.filter((item) => item.id !== id))
+
   return (
     <div style={{ margin: 40, padding: 40 }}>
       <div ref={containerRef} className="container">
         {items.map((item, i) => {
           return (
-            <DraggableItem context={context} key={item.id} index={i} item={item} />
+            <DraggableItem context={context} key={item.id} index={i} item={item} handleDelete={handleDelete} />
           );
         })}
       </div>
