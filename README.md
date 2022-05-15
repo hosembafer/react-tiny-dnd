@@ -1,6 +1,7 @@
 # react-tiny-dnd
 [![npm version](https://img.shields.io/npm/v/react-tiny-dnd?logo=npm)](https://www.npmjs.com/package/react-tiny-dnd)
 [![npm downloads](https://img.shields.io/npm/dw/react-tiny-dnd?logo=npm)](https://www.npmjs.com/package/react-tiny-dnd)
+[![npm size](https://img.shields.io/bundlephobia/min/react-tiny-dnd?logo=npm)](https://www.npmjs.com/package/react-tiny-dnd)
 
 Drag and Drop library for React.
 
