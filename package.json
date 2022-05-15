@@ -1,7 +1,7 @@
 {
   "name": "react-tiny-dnd",
   "version": "1.0.1",
-  "description": "",
+  "description": "Drag and Drop library for React.",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "scripts": {
@@ -13,7 +13,14 @@
     "type": "git",
     "url": "git+https://github.com/hosembafer/react-tiny-dnd.git"
   },
-  "keywords": [],
+  "keywords": [
+    "drag and drop",
+    "dnd",
+    "reorder",
+    "reorderable",
+    "sortable",
+    "react"
+  ],
   "author": "Rafael Hovhannisyan <hovhannisian.rafael@gmail.com>",
   "files": [
     "lib/**/*",
