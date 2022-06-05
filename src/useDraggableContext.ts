@@ -29,6 +29,8 @@ export const useDraggableContext = ({
   const isDragging = dragIndex !== -1 && doesMouseMoved;
 
   const onMove = useCallback((event: MouseEvent | TouchEvent) => {
+    event.preventDefault();
+
     const { clientY } = aggregateTouchAndMouseEvent(event);
 
     setDoesMouseMoved(true);
