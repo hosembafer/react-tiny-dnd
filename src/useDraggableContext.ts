@@ -106,7 +106,7 @@ export const useDraggableContext = ({
   useEffect(() => {
     document.body.addEventListener("mousemove", onMove);
     // @ts-ignore
-    document.body.addEventListener("touchmove", onMove);
+    document.body.addEventListener("touchmove", onMove, { passive: true });
 
     return () => {
       document.body.removeEventListener("mousemove", onMove);
