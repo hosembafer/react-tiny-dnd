@@ -7,7 +7,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "tslint -p tsconfig.json",
-    "build": "tsc"
+    "build": "tsc",
+    "watch": "tsc-watch"
   },
   "repository": {
     "type": "git",

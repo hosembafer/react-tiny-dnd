@@ -1,11 +1,11 @@
-import React, { CSSProperties, FC, MouseEventHandler, ReactNode, useEffect, useRef } from "react";
+import React, { CSSProperties, FC, MouseEventHandler, ReactNode, TouchEventHandler, useEffect, useRef } from "react";
 import { DraggableContextType } from "./types";
 
 export type DraggableProps = {
   index: number;
   children: ReactNode;
   context: DraggableContextType;
-  listeners?: { [key in string]: MouseEventHandler };
+  listeners?: { [key in string]: (MouseEventHandler | TouchEventHandler) };
 };
 
 type DragDividerProps = {

@@ -1,7 +1,19 @@
-import { RefObject, useCallback, useEffect, useMemo, useState } from "react";
+import { RefObject, TouchEvent, useCallback, useEffect, useMemo, useState } from "react";
 import { DraggableType, DraggableContextType } from "./types";
 
 const between = (x: number, from: number, to: number) => x > from && x < to;
+
+const aggregateTouchAndMouseEvent = (event: MouseEvent | TouchEvent): Partial<TouchInit | MouseEventInit> => {
+  let clientY;
+  if (event instanceof TouchEvent) {
+    clientY = event.touches[0].clientY;
+  } else if (event instanceof MouseEvent) {
+    clientY = event.clientY;
+  }
+  return {
+    clientY,
+  };
+};
 
 export const useDraggableContext = ({
   onDrop,
@@ -16,8 +28,9 @@ export const useDraggableContext = ({
   const [doesMouseMoved, setDoesMouseMoved] = useState(false);
   const isDragging = dragIndex !== -1 && doesMouseMoved;
 
-  const onMove = useCallback((event: MouseEvent) => {
-    const { clientY } = event;
+  const onMove = useCallback((event: MouseEvent | TouchEvent) => {
+    const { clientY } = aggregateTouchAndMouseEvent(event);
+
     setDoesMouseMoved(true);
 
     if (isDragging && !!items.length) {
@@ -36,7 +49,7 @@ export const useDraggableContext = ({
         const from = point - snapThreshold;
         const to = point + snapThreshold;
 
-        return between(clientY, from, to);
+        return clientY !== undefined && between(clientY, from, to);
       });
 
       setOverIndex(newOrder);
@@ -58,8 +71,12 @@ export const useDraggableContext = ({
 
   useEffect(() => {
     document.addEventListener("mouseup", onMouseUp);
+    document.addEventListener("touchend", onMouseUp);
 
-    return () => document.removeEventListener("mouseup", onMouseUp);
+    return () => {
+      document.removeEventListener("mouseup", onMouseUp);
+      document.removeEventListener("touchend", onMouseUp);
+    };
   }, [onMouseUp]);
 
   useEffect(() => {
@@ -88,8 +105,14 @@ export const useDraggableContext = ({
 
   useEffect(() => {
     document.body.addEventListener("mousemove", onMove);
+    // @ts-ignore
+    document.body.addEventListener("touchmove", onMove);
 
-    return () => document.body.removeEventListener("mousemove", onMove);
+    return () => {
+      document.body.removeEventListener("mousemove", onMove);
+      // @ts-ignore
+      document.body.removeEventListener("touchmove", onMove);
+    };
   }, [onMove]);
 
   const context = useMemo<DraggableContextType>(() => ({
