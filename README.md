@@ -2,6 +2,7 @@
 [![npm version](https://img.shields.io/npm/v/react-tiny-dnd?logo=npm)](https://www.npmjs.com/package/react-tiny-dnd)
 [![npm downloads](https://img.shields.io/npm/dw/react-tiny-dnd?logo=npm)](https://www.npmjs.com/package/react-tiny-dnd)
 [![npm size](https://img.shields.io/bundlephobia/minzip/react-tiny-dnd?logo=npm)](https://www.npmjs.com/package/react-tiny-dnd)
+![commit activity](https://img.shields.io/github/commit-activity/m/hosembafer/react-tiny-dnd)
 ![license](https://img.shields.io/github/license/hosembafer/react-tiny-dnd)
 
 Drag and Drop library for React.
