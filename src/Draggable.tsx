@@ -10,25 +10,22 @@ export type DraggableProps = {
 };
 
 type DragDividerProps = {
-  visible: boolean;
   height?: number;
   align: "top" | "bottom";
 };
 
 const DragDivider: FC<DragDividerProps> = ({
-  visible,
   height = 2,
   align,
 }) => {
   let style: CSSProperties = {
+    zIndex: 99999999999999999999,
     position: "absolute",
     width: "100%",
     backgroundColor: "#777",
     transition: "all 0.1s ease",
     height,
     [`${align}`]: (height / 2) + (align === "top" ? -1 : 0),
-    visibility: visible ? "visible" : "hidden",
-    opacity: visible ? 1 : 0,
   };
 
   return (
@@ -82,17 +79,17 @@ export const Draggable: FC<DraggableProps> = ({
       {...(listeners ?? {})}
       style={{ position: "relative" }}
     >
-      {!!preview && (
+      {!!preview && isDragging && dragIndex === index && (
         <div ref={previewRef} style={{ display: isDragging && dragIndex === index ? "block" : "none", position: "fixed", zIndex: 9999999999999 }}>
           {preview}
         </div>
       )}
 
-      {isDragging && <DragDivider align='top' visible={overIndex === 0 && index === 0} />}
+      {isDragging && overIndex === 0 && index === 0 && <DragDivider align='top' />}
 
       {children}
 
-      {isDragging && <DragDivider align='bottom' visible={overIndex - 1 === index} />}
+      {isDragging && overIndex - 1 === index && <DragDivider align='bottom' />}
     </div>
   );
 };
