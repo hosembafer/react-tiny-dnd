@@ -26,6 +26,7 @@ export const useDraggableContext = ({
   const [overIndex, setOverIndex] = useState(-1);
   const [items, setItems] = useState<DraggableType[]>([]);
   const [doesMouseMoved, setDoesMouseMoved] = useState(false);
+  const [mousePressedY, setMousePressedY] = useState();
   const isDragging = dragIndex !== -1 && doesMouseMoved;
 
   const onMove = useCallback((event: MouseEvent | TouchEvent) => {
@@ -33,7 +34,10 @@ export const useDraggableContext = ({
 
     const { clientY } = aggregateTouchAndMouseEvent(event);
 
-    setDoesMouseMoved(true);
+    const hasMovedEnough = mousePressedY !== undefined && clientY !== undefined && Math.abs(mousePressedY - clientY) > 5;
+    if (hasMovedEnough) {
+      setDoesMouseMoved(true);
+    }
 
     if (isDragging && !!items.length) {
       const sortedItems = [...items].sort((a, b) => a.order - b.order);
@@ -56,12 +60,14 @@ export const useDraggableContext = ({
 
       setOverIndex(newOrder);
     }
-  }, [isDragging, items, snapThreshold]);
+  }, [isDragging, items, snapThreshold, mousePressedY]);
 
   const onMouseUp = useCallback(() => {
     setDragIndex(-1);
     setOverIndex(-1);
+
     setDoesMouseMoved(false);
+    setMousePressedY(undefined);
 
     if (overIndex === -1) return;
     let indexShift = 0;
@@ -71,13 +77,23 @@ export const useDraggableContext = ({
     onDrop(dragIndex, overIndex + indexShift);
   }, [dragIndex, overIndex, onDrop]);
 
+  const onMouseDown = useCallback((event) => {
+    setMousePressedY(event.clientY);
+  }, []);
+
   useEffect(() => {
     document.addEventListener("mouseup", onMouseUp);
     document.addEventListener("touchend", onMouseUp);
 
+    document.addEventListener("mousedown", onMouseDown);
+    document.addEventListener("touchstart", onMouseDown);
+
     return () => {
       document.removeEventListener("mouseup", onMouseUp);
       document.removeEventListener("touchend", onMouseUp);
+
+      document.removeEventListener("mousedown", onMouseDown);
+      document.removeEventListener("touchstart", onMouseDown);
     };
   }, [onMouseUp]);
 
