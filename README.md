@@ -71,7 +71,14 @@ const DraggableItem = ({
   } = useDraggable(context, index);
   
   return (
-    <Draggable context={context} key={item.id} index={index}>
+    <Draggable
+      context={context}
+      key={item.id}
+      index={index}
+      preview={
+        <Item id={item.id} color={item.color} listeners={listeners} isDragging={false} />
+      }
+    >
       <Item
         item={item}
         handler={(

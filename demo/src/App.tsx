@@ -74,11 +74,16 @@ const DraggableItem = ({
   const { listeners, isDragging } = useDraggable(context, index);
 
   return (
-    <Draggable context={context} key={item.id} index={index} preview={(
-      <div style={{ width: 500 }}>
-        <Item id={item.id} color={item.color} listeners={listeners} isDragging={false} />
-      </div>
-    )}>
+    <Draggable
+      context={context}
+      key={item.id}
+      index={index}
+      {...{
+        preview: <div style={{ width: 500 }}>
+          <Item id={item.id} color={item.color} listeners={listeners} isDragging={false} />
+        </div>
+      }}
+    >
       <Item id={item.id} color={item.color} listeners={listeners} isDragging={isDragging} handleDelete={() => handleDelete(item.id)} />
     </Draggable>
   );
