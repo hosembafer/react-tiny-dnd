@@ -32,7 +32,7 @@ const buildItem = (n: number) => {
 
 const defaultItems = Array(100).fill(null).map((_, i) => buildItem(i));
 
-const Item: FC<{ id: string | number | undefined, color: string, listeners?: any, isDragging: boolean, handleDelete: Function }> = ({
+const Item: FC<{ id: string | number | undefined, color: string, listeners?: any, isDragging: boolean, handleDelete?: Function }> = ({
   id,
   color: backgroundColor,
   listeners,
@@ -50,12 +50,12 @@ const Item: FC<{ id: string | number | undefined, color: string, listeners?: any
   }
 
   return (
-    <div className="item" style={{ height, opacity }}>
+    <div className="item" style={{ height, opacity, backgroundColor: "white" }}>
       <div style={{ display: "flex", flex: 1, alignItems: "center", fontWeight: "bold" }}>
         <div className="color-badge" style={{ backgroundColor }} {...listeners}></div>
         {id}
       </div>
-      <div className="delete-icon" onClick={() => handleDelete()}>
+      <div className="delete-icon" onClick={() => handleDelete?.()}>
         <img src={deleteIc} alt="delete" />
       </div>
       <div className="dnd-icon" {...listeners}>
@@ -74,7 +74,11 @@ const DraggableItem = ({
   const { listeners, isDragging } = useDraggable(context, index);
 
   return (
-    <Draggable context={context} key={item.id} index={index}>
+    <Draggable context={context} key={item.id} index={index} preview={(
+      <div style={{ width: 500 }}>
+        <Item id={item.id} color={item.color} listeners={listeners} isDragging={false} />
+      </div>
+    )}>
       <Item id={item.id} color={item.color} listeners={listeners} isDragging={isDragging} handleDelete={() => handleDelete(item.id)} />
     </Draggable>
   );

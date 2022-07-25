@@ -1,4 +1,4 @@
-import React, { CSSProperties, FC, MouseEventHandler, ReactNode, TouchEventHandler, useEffect, useRef } from "react";
+import React, { CSSProperties, FC, MouseEventHandler, ReactNode, TouchEventHandler, useCallback, useEffect, useRef } from "react";
 import { DraggableContextType } from "./types";
 
 export type DraggableProps = {
@@ -6,6 +6,7 @@ export type DraggableProps = {
   children: ReactNode;
   context: DraggableContextType;
   listeners?: { [key in string]: (MouseEventHandler | TouchEventHandler) };
+  preview?: ReactNode;
 };
 
 type DragDividerProps = {
@@ -40,10 +41,12 @@ export const Draggable: FC<DraggableProps> = ({
   children,
   context,
   listeners,
+  preview,
 }) => {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const {
     registerDraggable,
+    dragIndex,
     overIndex,
     isDragging,
   } = context;
@@ -52,12 +55,39 @@ export const Draggable: FC<DraggableProps> = ({
     registerDraggable(wrapperRef, index);
   }, [wrapperRef, registerDraggable, index]);
 
+  const previewRef = useRef<HTMLDivElement>(null);
+
+  const handleMouseMove = useCallback((event: MouseEvent) => {
+    if (previewRef.current) {
+      previewRef.current.style.top = event.pageY + "px";
+      previewRef.current.style.left = event.pageX + "px";
+    }
+  }, [previewRef]);
+
+  useEffect(() => {
+    if (preview && isDragging && dragIndex === index) {
+      document.body.addEventListener("mousemove", handleMouseMove);
+    }
+
+    return () => {
+      if (preview && isDragging && dragIndex === index) {
+        document.body.removeEventListener("mousemove", handleMouseMove);
+      }
+    };
+  }, [preview, isDragging, handleMouseMove, dragIndex, index]);
+
   return (
     <div
       ref={wrapperRef}
       {...(listeners ?? {})}
       style={{ position: "relative" }}
     >
+      {!!preview && (
+        <div ref={previewRef} style={{ display: isDragging && dragIndex === index ? "block" : "none", position: "fixed", zIndex: 9999999999999 }}>
+          {preview}
+        </div>
+      )}
+
       {isDragging && <DragDivider align='top' visible={overIndex === 0 && index === 0} />}
 
       {children}
