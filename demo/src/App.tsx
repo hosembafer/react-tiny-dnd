@@ -109,6 +109,10 @@ function App() {
 
   return (
     <div style={{ margin: 40, padding: 40 }}>
+      <input type="number" value={3} />
+      <input type="text" value="Hello, world!" />
+      Those inputs are temporary and for testing purposes, just ignore.<br /><br />
+
       <div ref={containerRef} className="container">
         {items.map((item, i) => {
           return (
