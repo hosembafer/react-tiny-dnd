@@ -25,7 +25,7 @@ yarn add react-tiny-dnd
 - Vertical lists
 - Touch support 📱 (desktop and mobile) 
 - Extra small [![npm size](https://img.shields.io/bundlephobia/minzip/react-tiny-dnd?label=%20)](https://www.npmjs.com/package/react-tiny-dnd)
-- Easy auto scrolling [integration](https://github.com/hosembafer/react-tiny-dnd/blob/main/demo/src/App.tsx#L97) 🔥
+- Easy auto scrolling [integration](https://github.com/hosembafer/react-tiny-dnd/blob/main/demo/src/App.tsx#L106) 🔥
 - Add and remove items with no doubts
 - Variable heights supported by design 🚀
 - Custom preview component for draggable
