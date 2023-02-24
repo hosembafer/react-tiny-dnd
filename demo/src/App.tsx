@@ -78,6 +78,7 @@ const DraggableItem = ({
       context={context}
       key={item.id}
       index={index}
+      dividerClassName="custom-divider"
       {...{
         preview: <div style={{ width: 500 }}>
           <Item id={item.id} color={item.color} listeners={listeners} isDragging={false} />

@@ -58,3 +58,7 @@ code {
   cursor: row-resize;
   user-select: none;
 }
+
+.custom-divider {
+  background-color: black !important;
+}

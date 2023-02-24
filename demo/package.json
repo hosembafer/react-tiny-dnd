@@ -14,7 +14,7 @@
     "react-dom": "^18.1.0",
     "react-scripts": "5.0.1",
     "react-tiny-autoscroll": "^1.2.1",
-    "react-tiny-dnd": "^1.2.3",
+    "react-tiny-dnd": "^1.2.4",
     "typescript": "^4.6.4",
     "web-vitals": "^2.1.4"
   },
