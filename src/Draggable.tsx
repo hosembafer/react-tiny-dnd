@@ -7,14 +7,17 @@ export type DraggableProps = {
   context: DraggableContextType;
   listeners?: { [key in string]: (MouseEventHandler | TouchEventHandler) };
   preview?: ReactNode;
+  dividerClassName?: string;
 };
 
 type DragDividerProps = {
+  className?: string;
   height?: number;
   align: "top" | "bottom";
 };
 
 const DragDivider: FC<DragDividerProps> = ({
+  className,
   height = 2,
   align,
 }) => {
@@ -29,7 +32,7 @@ const DragDivider: FC<DragDividerProps> = ({
   };
 
   return (
-    <div style={style} />
+    <div style={style} className={className} />
   );
 };
 
@@ -39,6 +42,7 @@ export const Draggable: FC<DraggableProps> = ({
   context,
   listeners,
   preview,
+  dividerClassName,
 }) => {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const {
@@ -85,11 +89,11 @@ export const Draggable: FC<DraggableProps> = ({
         </div>
       )}
 
-      {isDragging && overIndex === 0 && index === 0 && <DragDivider align='top' />}
+      {isDragging && overIndex === 0 && index === 0 && <DragDivider className={dividerClassName} align='top' />}
 
       {children}
 
-      {isDragging && overIndex - 1 === index && <DragDivider align='bottom' />}
+      {isDragging && overIndex - 1 === index && <DragDivider className={dividerClassName} align='bottom' />}
     </div>
   );
 };

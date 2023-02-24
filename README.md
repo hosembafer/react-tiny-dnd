@@ -110,3 +110,5 @@ Returns `{ listeners: EventHandler[], isDragging: boolean }`
 - `context: DraggableContextType` - containing the dragging state
 - `index: number` - uses to identify the item
 - `listeners?: EventHandler[]` - containing dragging event handlers and can be passed to your desired handler (one or more)
+- `dividerClassName?: string` - Customize horizontal divider
+- `preview?: ReactNode` - Shows the element when dragging
