@@ -3,9 +3,13 @@ import { DraggableType, DraggableContextType } from "./types";
 
 const between = (x: number, from: number, to: number) => x > from && x < to;
 
+const isTouchEvent = (event: MouseEvent | TouchEvent): event is TouchEvent => {
+  return "touches" in event;
+};
+
 const aggregateTouchAndMouseEvent = (event: MouseEvent | TouchEvent): Partial<TouchInit | MouseEventInit> => {
   let clientY;
-  if (event instanceof TouchEvent) {
+  if (isTouchEvent(event)) {
     clientY = event.touches[0].clientY;
   } else if (event instanceof MouseEvent) {
     clientY = event.clientY;
